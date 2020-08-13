@@ -90,3 +90,6 @@ class TokenType(Enum):
 
     STARTCODE = auto(),
     ENDCODE = auto(),
+
+    def __repr__(self):
+        return self.name

@@ -22,6 +22,7 @@ class Lexer:
         self.tokens = []
 
     def tokenize(self) -> List[LinedToken]:
+        self.tokens = []
         buffer = ""
         record_string = False
         last_line = 1
@@ -43,10 +44,12 @@ class Lexer:
 
     def sep_tk_case(self, sym, buffer, line, record_string):
         if buffer != "":
-            self.tokens.append(LinedToken(buffer, line))
-            return ""
+            instance = LinedToken(buffer, line)
+            self.tokens.append(instance)
+            buffer = ""
         if record_string or (sym != " " and sym != '\n' and sym != '\t'):
-            self.tokens.append(LinedToken(sym, line))
+            instance = LinedToken(sym, line)
+            self.tokens.append(instance)
         return buffer
 
     def adj_decimal_handler(self, i, line, hatch_tokens) -> int:
@@ -82,7 +85,8 @@ class Lexer:
         return i
 
     def adj_default_handler(self, i, line, hatch_tokens) -> int:
-        hatch_tokens.append(LinedToken(self.tokens[i].lexeme, line))
+        instance = LinedToken(self.tokens[i].lexeme, line)
+        hatch_tokens.append(instance)
         return i + 1
 
     def adj_handler_get(self, i):

@@ -47,10 +47,16 @@ class Token:
             return True
         return False
 
-    def __str__(self):
+    def name(self):
         type_str = str(self.type)
         token_type = type_str[:type_str.find('.')]
+        return token_type
+
+    def __str__(self):
+        token_type = self.name()
         return "<(" + token_type + ", " + self.lexeme + ")>"
 
     def __repr__(self):
         return self.__str__()
+
+
