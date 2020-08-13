@@ -1,14 +1,15 @@
 from typing import List
-from .expression_exception import ExpressionException
-from .expression.expression import Expression
-from .expression.number_expression import NumberExpression
-from .expression.string_expression import StringExpression
-from .expression.binary_expression import BinaryExpression
-from .expression.unary_expression import UnaryExpression
-from ..lexer.lexer_line_filter import LexerLineFilter
-from ..lexer.lined_token import LinedToken
-from ..lexer.token import Token
-from ..lexer.token_type import TokenType
+
+from loripy.utils.expression.binary_expression import BinaryExpression
+from loripy.utils.expression.expression import Expression
+from loripy.utils.expression.expression_exception import ExpressionException
+from loripy.utils.expression.number_expression import NumberExpression
+from loripy.utils.expression.string_expression import StringExpression
+from loripy.utils.expression.unary_expression import UnaryExpression
+from loripy.utils.lexer_line_filter import LexerLineFilter
+from loripy.utils.lined_token import LinedToken
+from loripy.utils.token import Token
+from loripy.utils.token_type import TokenType
 
 
 class Parser:

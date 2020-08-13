@@ -1,7 +1,4 @@
 import argparse
-from loripy.utils.lexer.lexer import Lexer
-from loripy.utils.lexer.lexer_line_filter import LexerLineFilter
-from loripy.utils.parser.parser import Parser
 from loripy.loripy import Loripy
 
 if __name__ == '__main__':

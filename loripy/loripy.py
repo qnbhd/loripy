@@ -1,5 +1,5 @@
-from .utils.lexer.lexer import Lexer
-from .utils.parser.parser import Parser
+from loripy.utils.lexer import Lexer
+from loripy.utils.parser import Parser
 from bs4 import BeautifulSoup as bs
 import re
 
