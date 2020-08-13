@@ -1,0 +1,2 @@
+class LineException(Exception):
+    pass
