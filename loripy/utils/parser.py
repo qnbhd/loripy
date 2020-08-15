@@ -19,11 +19,10 @@ class Parser:
     tokens: [List[LinedToken]]
     CUR_LINE: int
 
-    def __init__(self, tokens, sandbox=SandBox()):
+    def __init__(self, tokens, sandbox):
         self.not_filtered_tokens = tokens
         self.tokens = LexerLineFilter(tokens).get_filtered_tokens()
         self.pos = 0
-        self.CUR_LINE = 0
         self.sandbox = sandbox
 
     def get(self, relative_position: int) -> LinedToken:
@@ -51,7 +50,6 @@ class Parser:
 
     def parse(self):
         result = {line: Expression() for line in self.tokens}
-
         for line, code_block in self.tokens.items():
             self.pos = 0
             self.CUR_LINE = line
@@ -109,7 +107,8 @@ class Parser:
         return NumberExpression(float(current.lexeme))
 
     def string_match(self, current) -> Expression:
-        return StringExpression(current.lexeme)
+        string = current.lexeme[1:-1]
+        return StringExpression(string)
 
     def identifier_match(self, current) -> Expression:
         identifier_name = current.lexeme

@@ -12,5 +12,7 @@ if __name__ == '__main__':
     destination = args.destination
 
     loripy = Loripy(filename, source_type='file')
-    loripy.sandbox.add_variable('var_name', 5)
+    loripy.sandbox.add_variable('var_name', 10)
+    loripy.sandbox.add_variable('user_name', "Костя")
+    loripy.process()
     loripy.render(destination)

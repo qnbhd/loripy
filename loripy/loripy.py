@@ -17,25 +17,29 @@ bs.prettify = prettify
 
 
 class Loripy:
+    source: str
+    sandbox: SandBox
+    expressions: dict
 
     def __init__(self, source, source_type='string'):
         self.source = source
         self.sandbox = SandBox()
         if source_type == 'file':
-            with open(source) as f:
+            with open(source, encoding="utf-8") as f:
                 self.source = f.read()
                 f.seek(0)
                 self.lines = f.readlines()
         elif source_type != 'string':
             raise TypeError('Invalid source type')
+        self.expressions = dict()
 
+    def process(self):
         lexer = Lexer(self.source)
-        self.sandbox.add_variable('var', 'Gavr chlen')
         lexer_result = lexer.tokenize()
         parser = Parser(lexer_result, self.sandbox)
         self.expressions = parser.parse()
 
-    def render(self, destination):
+    def render(self, destination, prettify=False):
         for item in self.expressions.items():
             line, expression = item
             line_index_in_file = line - 1
@@ -56,10 +60,10 @@ class Loripy:
         rendered_html = ' '.join(self.lines)
         soup = bs(rendered_html, 'html.parser')
 
-        # prettyHTML = soup.prettify(formatter='html', indent_width=3)
+        if prettify:
+            rendered_html = soup.prettify(formatter='html', indent_width=2)
 
-        with open(destination, 'w') as f:
+        with open(destination, 'w', encoding="utf-8") as f:
             f.write(rendered_html)
 
         webbrowser.open_new_tab(destination)
-
