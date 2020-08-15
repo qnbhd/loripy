@@ -15,4 +15,4 @@ class StringExpression(Expression):
         return self.__str__()
 
     def execute(self):
-        return self.string[1:-1]
+        return self.string

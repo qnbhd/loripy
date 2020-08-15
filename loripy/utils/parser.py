@@ -8,8 +8,10 @@ from loripy.utils.expression.string_expression import StringExpression
 from loripy.utils.expression.unary_expression import UnaryExpression
 from loripy.utils.lexer_line_filter import LexerLineFilter
 from loripy.utils.lined_token import LinedToken
+from loripy.utils.sandbox_exception import SandBoxException
 from loripy.utils.token import Token
 from loripy.utils.token_type import TokenType
+from loripy.utils.sandbox import SandBox
 
 
 class Parser:
@@ -17,11 +19,12 @@ class Parser:
     tokens: [List[LinedToken]]
     CUR_LINE: int
 
-    def __init__(self, tokens):
+    def __init__(self, tokens, sandbox=SandBox()):
         self.not_filtered_tokens = tokens
         self.tokens = LexerLineFilter(tokens).get_filtered_tokens()
         self.pos = 0
         self.CUR_LINE = 0
+        self.sandbox = sandbox
 
     def get(self, relative_position: int) -> LinedToken:
         position = self.pos + relative_position
@@ -109,7 +112,21 @@ class Parser:
         return StringExpression(current.lexeme)
 
     def identifier_match(self, current) -> Expression:
-        return Expression()
+        identifier_name = current.lexeme
+        value = None
+        try:
+            value = self.sandbox.get_variable(identifier_name)
+        except SandBoxException:
+            pass
+        try:
+            value = self.sandbox.get_function(identifier_name)
+        except SandBoxException:
+            pass
+        if value is None:
+            raise SandBoxException("Identifier doesn't exist in sandbox")
+        return StringExpression(
+            str(value)
+        )
 
     def PRIMARY(self) -> Expression:
         current = self.get(0)
@@ -123,4 +140,5 @@ class Parser:
         if self.match(TokenType.IDENTIFIER):
             return self.identifier_match(current)
 
+        print(current)
         raise ExpressionException('Unknown expression')

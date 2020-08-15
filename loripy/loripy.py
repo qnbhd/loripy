@@ -1,7 +1,9 @@
 from loripy.utils.lexer import Lexer
 from loripy.utils.parser import Parser
 from bs4 import BeautifulSoup as bs
+from loripy.utils.sandbox import SandBox
 import re
+import webbrowser
 
 orig_prettify = bs.prettify
 r = re.compile(r'^(\s*)', re.MULTILINE)
@@ -18,6 +20,7 @@ class Loripy:
 
     def __init__(self, source, source_type='string'):
         self.source = source
+        self.sandbox = SandBox()
         if source_type == 'file':
             with open(source) as f:
                 self.source = f.read()
@@ -27,8 +30,9 @@ class Loripy:
             raise TypeError('Invalid source type')
 
         lexer = Lexer(self.source)
+        self.sandbox.add_variable('var', 'Gavr chlen')
         lexer_result = lexer.tokenize()
-        parser = Parser(lexer_result)
+        parser = Parser(lexer_result, self.sandbox)
         self.expressions = parser.parse()
 
     def render(self, destination):
@@ -52,7 +56,10 @@ class Loripy:
         rendered_html = ' '.join(self.lines)
         soup = bs(rendered_html, 'html.parser')
 
-        prettyHTML = soup.prettify(formatter='html', indent_width=3)
+        # prettyHTML = soup.prettify(formatter='html', indent_width=3)
 
         with open(destination, 'w') as f:
-            f.write(prettyHTML)
+            f.write(rendered_html)
+
+        webbrowser.open_new_tab(destination)
+
