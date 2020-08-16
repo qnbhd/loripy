@@ -21,6 +21,7 @@ class BinaryExpression(Expression):
     def execute(self):
         left = self.expr1.execute()
         right = self.expr2.execute()
+
         operation = self.operation
 
         if operation == '-':

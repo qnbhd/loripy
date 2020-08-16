@@ -40,27 +40,34 @@ class Loripy:
         self.expressions = parser.parse()
 
     def render(self, destination, prettify=False):
-        for item in self.expressions.items():
-            line, expression = item
-            line_index_in_file = line - 1
-            content_on_line = self.lines[line_index_in_file]
-            executed_result = str(expression.execute())
+        flatted = [exp for idx, exp_list in self.expressions.items() for exp in exp_list]
 
-            start_code_pos = content_on_line.find('[$')
-            if start_code_pos == -1:
-                raise Exception('Undefined exception in analyze')
-            end_code_pos = content_on_line.find('$]') + 1
+        rendered_html = self.source
+        # very slow !
+        for i, exp in enumerate(flatted):
+            rendered_html= re.sub(r'\[\$(.*?)\$]', str(exp.execute()), rendered_html, count=1)
 
-            left = content_on_line[:start_code_pos]
-            right = content_on_line[end_code_pos + 1:]
-            result = left + executed_result + right
+        # for item in self.expressions.items():
+        #     line, expression = item
+        #     line_index_in_file = line - 1
+        #     content_on_line = self.lines[line_index_in_file]
+        #     executed_result = str(expression.execute())
+        #
+        #     start_code_pos = content_on_line.find('[$')
+        #     if start_code_pos == -1:
+        #         raise Exception('Undefined exception in analyze')
+        #     end_code_pos = content_on_line.find('$]') + 1
+        #
+        #     left = content_on_line[:start_code_pos]
+        #     right = content_on_line[end_code_pos + 1:]
+        #     result = left + executed_result + right
+        #
+        #     self.lines[line_index_in_file] = result
 
-            self.lines[line_index_in_file] = result
-
-        rendered_html = ' '.join(self.lines)
-        soup = bs(rendered_html, 'html.parser')
+        # rendered_html = ' '.join(self.lines)
 
         if prettify:
+            soup = bs(rendered_html, 'html.parser')
             rendered_html = soup.prettify(formatter='html', indent_width=2)
 
         with open(destination, 'w', encoding="utf-8") as f:

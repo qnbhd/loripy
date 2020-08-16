@@ -13,6 +13,6 @@ if __name__ == '__main__':
 
     loripy = Loripy(filename, source_type='file')
     loripy.sandbox.add_variable('var_name', 10)
-    loripy.sandbox.add_variable('user_name', "Костя")
+    loripy.sandbox.add_variable('user_name', "QNBHD")
     loripy.process()
     loripy.render(destination)

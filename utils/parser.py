@@ -1,5 +1,6 @@
-from typing import List
+import collections
 
+from typing import List
 from utils.expression.binary_expression import BinaryExpression
 from utils.expression.expression import Expression
 from utils.expression.expression_exception import ExpressionException
@@ -48,12 +49,20 @@ class Parser:
         return current
 
     def parse(self):
-        result = {line: Expression() for line in self.tokens}
+        result = {line: [] for line in self.tokens}
+        blocks_count_on_lines = collections.Counter()
+
+        for line, code_block in self.tokens.items():
+            for token in code_block:
+                if token.type == TokenType.STARTCODE:
+                    blocks_count_on_lines[line] += 1
+
         for line, code_block in self.tokens.items():
             self.pos = 0
             self.CUR_LINE = line
-            res = self.CODE_BLOCK()
-            result[line] = res
+            for iteration in range(blocks_count_on_lines[line]):
+                res = self.CODE_BLOCK()
+                result[line].append(res)
 
         return result
 
@@ -122,9 +131,9 @@ class Parser:
             pass
         if value is None:
             raise SandBoxException("Identifier doesn't exist in sandbox")
-        return StringExpression(
-            str(value)
-        )
+        if isinstance(value, int):
+            return NumberExpression(value)
+        return StringExpression(value)
 
     def PRIMARY(self) -> Expression:
         current = self.get(0)

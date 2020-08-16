@@ -40,7 +40,16 @@ class Lexer:
             self.tokens.append(LinedToken(buffer, last_line))
 
         self.adj_sub()
+        self.post_process()
         return self.tokens
+
+    def post_process(self):
+        for idx, token in enumerate(self.tokens):
+            if token.lexeme == '$][$':
+                self.tokens[idx].lexeme = '[$'
+                self.tokens[idx].type = TokenType.STARTCODE
+                instance = LinedToken('$]', token.line)
+                self.tokens.insert(idx, instance)
 
     def sep_tk_case(self, sym, buffer, line, record_string):
         if buffer != "":
