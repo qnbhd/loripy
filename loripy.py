@@ -1,7 +1,7 @@
-from loripy.utils.lexer import Lexer
-from loripy.utils.parser import Parser
+from utils.lexer import Lexer
+from utils.parser import Parser
 from bs4 import BeautifulSoup as bs
-from loripy.utils.sandbox import SandBox
+from utils.sandbox import SandBox
 import re
 import webbrowser
 

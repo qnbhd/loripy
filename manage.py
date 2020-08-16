@@ -1,5 +1,5 @@
 import argparse
-from loripy.loripy import Loripy
+from loripy import Loripy
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
