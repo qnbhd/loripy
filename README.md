@@ -17,7 +17,7 @@ Run loripy with manage script `python manage.py [TARGET] [DESTINATION]` for Wind
 
 And `python3 manage.py [TARGET] [DESTINATION]` for Linux & MacOS
 
-Or in code import loripy with `from loripy.loripy import Loripy` 
+Or in code import loripy with `from import Loripy` 
 
 and write:
 
