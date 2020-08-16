@@ -81,7 +81,7 @@ Output code with loripy processing:
 </head>
 <body>
 <h1>lorem ipsum</h1>
-<p>qnbhd</p>
+<p>User name: qnbhd</p>
 </body>
 </html>
 ```
