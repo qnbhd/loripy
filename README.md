@@ -1,6 +1,6 @@
 # loripy - python templating language
 
-![Logo](https://i.postimg.cc/rmnXJrTG/loripy.png)
+<img src="https://i.postimg.cc/Y2D6BW89/loripy.png" alt="drawing" heigth="300" width="300"/>
 
 [![GitHub issues](https://img.shields.io/github/issues/qnbhd/loripy)](https://github.com/qnbhd/loripy/issues) [![GitHub forks](https://img.shields.io/github/forks/qnbhd/loripy)](https://github.com/qnbhd/loripy/network) [![GitHub stars](https://img.shields.io/github/stars/qnbhd/loripy)](https://github.com/qnbhd/loripy/stargazers) [![GitHub license](https://img.shields.io/github/license/qnbhd/loripy)](https://github.com/qnbhd/loripy)
 
