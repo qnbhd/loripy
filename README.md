@@ -77,11 +77,11 @@ Output code with loripy processing:
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>[$ var_name $]</title>
+    <title>10</title>
 </head>
 <body>
-<h1>[$ "lorem ipsum" $]</h1>
-<p>User name: [$ user_name $]</p>
+<h1>lorem ipsum</h1>
+<p>qnbhd</p>
 </body>
 </html>
 ```
